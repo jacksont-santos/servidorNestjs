@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model usuarios {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  nome       String
+  sobrenome  String
+  nascimento String
+  senha      String
+  createdAt  DateTime @default(now())
+  updateAt   DateTime @updatedAt
+}
+
+model filmes {
+  filme_id       String   @id @default(uuid())
+  nome_filme     String   @unique
+  genero         String
+  imagem         String
+  ator_principal String
+  diretor        String
+  lancamento     String
+  produtora      String
+  duracao        String
+  preco          String
+  sinopse        String
+  createdAt      DateTime @default(now())
+}
+
+model generos {
+  genero_id String @id @default(uuid())
+  genero    String
+}
+
+model atores {
+  ator_id   String @id @default(uuid())
+  nome_ator String
+}
+
+model produtoras {
+  produtora_id   String @id @default(uuid())
+  nome_produtora String
+}
