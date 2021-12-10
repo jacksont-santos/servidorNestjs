@@ -40,4 +40,8 @@ export class CreateFilmDTO {
     @IsString()
     @IsOptional()
     sinopse: string;
+
+    @IsString()
+    @IsOptional()
+    assistido: string;
 }

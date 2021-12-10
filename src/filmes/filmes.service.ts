@@ -6,11 +6,11 @@ import { filmes } from '@prisma/client';
 
 @Injectable()
 export class FilmesService {
-    constructor(private database: PrismaService) {};
+    constructor(private database: PrismaService) { };
 
     async getAllfilms(): Promise<any[]> {
-        const filmsAll = await this.database.filmes.findMany();
-        return filmsAll;
+        const allMovies = await this.database.filmes.findMany();
+        return allMovies;
     };
 
     async getFilm(id: string): Promise<filmes> {
@@ -20,13 +20,13 @@ export class FilmesService {
     };
 
     async createFilm(dadosdto: CreateFilmDTO): Promise<filmes> {
-        const filmExisting = await this.database.filmes.findUnique({ where: { nome_filme: dadosdto.nome_filme },});
-        if (filmExisting) {
+        const film = await this.database.filmes.findUnique({ where: { nome_filme: dadosdto.nome_filme }, });
+        if (film) {
             throw new ConflictException(' Esse filme já está cadastrado');
         };
-        const criarFilme = await this.database.filmes.create({data: dadosdto});
+        const criarFilme = await this.database.filmes.create({ data: dadosdto });
         return criarFilme;
-        };
+    };
 
     async updateFilm(id: string, dataFilm: UpdateFilmDTO): Promise<filmes> {
         const updateFilme = await this.database.filmes.update({

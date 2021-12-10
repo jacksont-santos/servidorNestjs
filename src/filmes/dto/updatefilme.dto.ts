@@ -43,4 +43,9 @@ export class UpdateFilmDTO {
     @IsString()
     @IsOptional()
     sinopse: string;
+    
+    @IsString()
+    @IsNotEmpty()
+    @IsOptional()
+    assistido: string;
 }

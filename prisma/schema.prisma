@@ -33,6 +33,7 @@ model filmes {
   duracao        String
   preco          String
   sinopse        String
+  assistido      String
   createdAt      DateTime @default(now())
 }
 
