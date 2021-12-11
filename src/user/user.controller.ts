@@ -4,6 +4,7 @@ import { CreateUserDTO } from './dto/createuser.dto';
 import { UpdateUserDTO } from './dto/updateuser.dto';
 import { usuarios } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
+import AuthUser from 'src/auth/auth-user.decorator';
 
 @Controller('')
 export class UserController {
@@ -36,5 +37,11 @@ export class UserController {
   @Delete('delete/:id')
   deleteById(@Param('id') id: string): Promise<{ message: string }> {
     return this.service.deleteUser(id);
+  }
+
+  @UseGuards(AuthGuard())
+  @Patch('addList/:id')
+  addList(@AuthUser() user: usuarios, @Param('id') filmeId: string) {
+    return this.service.addList(user, filmeId);
   }
 }

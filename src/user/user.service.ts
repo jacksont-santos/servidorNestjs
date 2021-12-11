@@ -1,6 +1,6 @@
 import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { usuarios } from '@prisma/client';
+import { usuarios, filmes } from '@prisma/client';
 import { CreateUserDTO } from './dto/createuser.dto';
 import { UpdateUserDTO } from './dto/updateuser.dto';
 import * as bcrypt from 'bcrypt';
@@ -63,4 +63,30 @@ export class UserService {
             return { message: ' Usuário deletado' };
         };
     };
+
+    async addList(user: usuarios, filmeId: string) {
+        const filme = await this.badeco.filmes.findUnique({
+            where: { filme_id: filmeId },
+        });
+
+        if (!filme) {
+            throw new NotFoundException('O filme não foi encontrado');
+        }
+
+        const usuario = await this.badeco.usuarios.update({
+            where: { id: user.id },
+            data: {
+                filmes: {
+                    connect: {
+                        filme_id: filme.filme_id,
+                    },
+                },
+            },
+            include: {
+                filmes: true,
+            },
+        });
+        delete usuario.senha;
+        return usuario;
+    }
 }

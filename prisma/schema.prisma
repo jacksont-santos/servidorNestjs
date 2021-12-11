@@ -19,6 +19,7 @@ model usuarios {
   senha      String
   createdAt  DateTime @default(now())
   updateAt   DateTime @updatedAt
+  filmes     filmes[]
 }
 
 model filmes {
@@ -35,6 +36,7 @@ model filmes {
   sinopse        String
   assistido      String
   createdAt      DateTime @default(now())
+  usuarios       usuarios[]
 }
 
 model generos {
