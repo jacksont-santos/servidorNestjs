@@ -19,12 +19,12 @@ export class AuthService {
       dataLogin.senha,
       usuario.senha
     );
-    if (senhaValida) {
+    if (!senhaValida) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    };
+
       const payload = { email: usuario.email };
       const token = await this.jwt.sign(payload);
       return { token };
-    } else {
-      throw new UnauthorizedException('Credenciais inválidas');
-    };
   };
 }
